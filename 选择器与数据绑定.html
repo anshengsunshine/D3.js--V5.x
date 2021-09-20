@@ -16,7 +16,7 @@
     <h3 title="author"></h3>
     <h3 class="date"></h3>
 
-    <!-- 数据绑定 -->
+    <!-- 数据绑定 datum -->
     <p></p>
     <p></p>
     <p></p>
@@ -24,6 +24,14 @@
     <p></p>
     <p></p>
     <p></p>
+
+    <!-- 数据绑定 datum -->
+    <h1></h1>
+    <h1></h1>
+    <h1></h1>
+    <h1></h1>
+    <h1></h1>
+
 
 </body>
 <script>
@@ -33,7 +41,7 @@
      * d3.select()
      * */
     var h3 = d3.select("body").selectAll("h3")
-    var h4= d3.select("h4")
+    var h4 = d3.select("h4")
     var author = d3.select("[title='author']")
     var date = d3.select(".date")
     h3.text("竹杖芒鞋轻胜马，谁怕")
@@ -45,10 +53,27 @@
      * 数据绑定
      * d3.datum()
     */
-   var p = d3.select("body").selectAll("p")
-   p.datum("今天是2021-09-20").text((v,i)=>{
-       return `我是第${i}个P标签，内容为：${v}`
-   })
+    var p = d3.select("body").selectAll("p")
+    p.datum("今天是2021-09-20").text((v, i) => {
+        return `我是第${i}个P标签，内容为：${v}`
+    })
+
+    /**
+     * 数据绑定
+     * d3.data()
+    */
+    var lyrics = [
+        '莫听穿林打叶声',
+        '何妨吟啸且徐行',
+        '竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。',
+        '料峭春风吹酒醒，微冷，',
+        '山头斜照却相迎。回首向来萧瑟处，归去，也无风雨也无晴。'
+    ];
+    var h1 = d3.selectAll("h1")
+    h1.data(lyrics).text((d,i)=>{
+        return `${i}：${d}`
+    })
+
 
 
 </script>
