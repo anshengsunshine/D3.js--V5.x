@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <title>选择器与数据绑定</title>
+</head>
+
+<body>
+    <h3></h3>
+    <h4 id="h4"></h4>
+    <h3 title="author"></h3>
+    <h3 class="date"></h3>
+</body>
+<script>
+    /**
+     * 选择器
+     * d3.selectAll() 
+     * d3.select()
+     * */
+    var h3 = d3.select("body").selectAll("h3")
+    var h4= d3.select("h4")
+    var author = d3.select("[title='author']")
+    var date = d3.select(".date")
+    h3.text("竹杖芒鞋轻胜马，谁怕")
+    h4.text("一蓑烟雨任平生")
+    author.text("苏轼")
+    date.text("2021-09-20")
+
+</script>
+
+</html>
