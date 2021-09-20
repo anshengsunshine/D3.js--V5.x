@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <title>动态绘制bar图</title>
+    <style>
+        .h-bar{
+            margin: 5px;
+            border: 1px solid #eeff04;
+            background-color: #eeff04;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="h_bar"></div>
+
+</body>
+<script>
+
+    var data = [10, 15, 30, 50, 80, 65, 55, 30, 20, 10, 8]; // <- A
+    function render(data) { // <- B
+        // 进入(Enter )
+        d3.select("body").selectAll("div.h-bar") // <- C
+            .data(data) // <- D
+            .enter() // <- E  // 为选定的每一个数据创建一个div元素，并把这些元素加入到body中
+            .append("div") // <- F
+            .attr("class", "h-bar")
+            .append("span"); // <- G
+        // 更新(Update )
+        d3.select("body").selectAll("div.h-bar")
+            .data(data)
+            .style("width", function (d) {// <- H 
+                return (d * 3) + "px";
+            })
+            .select("span") // <- I
+            .text(function (d) {
+                return d;
+            });
+        // 退出(Exit)
+        d3.select("body").selectAll("div.h-barH").data(data)
+            .exit() // <- J
+            .remove()
+    };
+
+
+    setInterval(function () { // <- K
+        data.shift();
+        data.push(Math.round(Math.random() * 100));
+        render(data);
+    }, 1500);
+
+    render(data);
+
+</script>
+
+</html>
