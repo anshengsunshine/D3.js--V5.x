@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <title>data_5：数据过滤后绑定为数据</title>
+    <style>
+        .h-bar {
+            min-height: 15px;
+            min-width: 10px;
+            background-color: steelblue;
+            margin-bottom: 2px;
+            font-size: 11px;
+            color: #f0f8ff;
+            text-align: right;
+            padding-right: 2px;
+        }
+
+        .selected {
+            background-color: #f08080;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="control-groupn">
+        <button onclick="select('Retail')"> Retail
+        </button>
+        <button onclick="select('Gas')">
+            Gas
+        </button>
+        <button onclick="select('Dining')">
+            Dining
+        </button>
+        <button onclick="select()">
+            Clear
+        </button>
+    </div>
+    <script type="text/javascript">
+        var data = [
+            { expense: 10, category: "Retail" },
+            { expense: 15, category: "Gas" },
+            { expense: 30, category: "Retail" },
+            { expense: 50, category: "Dining" },
+            { expense: 80, category: "Gas" },
+            { expense: 65, category: "Retail" },
+            { expense: 55, category: "Gas" },
+            { expense: 30, category: "Dining" },
+            { expense: 20, category: "Retailn" },
+            { expense: 10, category: "Dining" },
+            { expense: 8, category: "Gas" }
+        ]
+
+        function render(data, category) {
+            d3.select("body").selectAll("div.h-bar").data(data).enter().append("div").attr("class", "h-bar").append("span");
+
+            d3.select("body").selectAll("div.h-bar").data(data).exit().remove()
+
+            d3.select("body").selectAll("div.h-bar").data(data).attr("class", "h-bar").style("width", function (d) {
+                return (d.expense * 5) + "px"
+            }).select("span").text(function (d) {
+                return d.category
+            })
+
+            // D3的selection.filter()使用一个函数作为其参数。
+            // 它将当前选集中的每一个元素作为参 数来调用这个函数。
+            // 这个作为filter参数的函数拥有两个参数和一个隐含的引用。
+            //     ♦d：和当前图形元素关联的数据。
+            //     ♦i：从0开始的下标，用以标识当前的图形元素。
+            //     ♦this：这是一个隐含的引用，代表了当前图形的DOM元素。
+            // 作为selection.filter()参数的函数需要返回一^布尔值。如果这个函数返回的值是true, 那么相应的图形元素会包含在filter函数新生成的选集中。在本例中,filter函数生成的新的 选集包含了所有与用户选定的类型一致的图形。我们为这些图形添加了相应的CSS类型使 其以高亮的方式进行显示。使用这种方法，
+
+            // 我们可以方便地过滤并生成子图形选集，并在 新生成的选集上进行额外的操作以强化视觉效果。
+
+            d3.select("body").selectAll("div.h-bar").filter(function (d, i) { // <-E
+                return d.category == category;
+            })
+                .classed("selected", true);
+        }
+
+        render(data)
+
+        function select(str) {
+            render(data, str)
+        }
+
+
+    </script>
+
+</body>
+
+</html>
